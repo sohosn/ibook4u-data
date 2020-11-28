@@ -8,8 +8,8 @@ import {
   GraphQLList as ListType,
 } from 'graphql';
 
-const EventType = new ObjectType({
-  name: 'Event',
+const AppointmentType = new ObjectType({
+  name: 'Appointment',
   fields: {
     id: {
       type: new NonNull(StringType),
@@ -91,4 +91,4 @@ const EventType = new ObjectType({
     },
   },
 });
-module.exports = EventType;
+module.exports = AppointmentType;

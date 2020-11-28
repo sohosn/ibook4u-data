@@ -9,7 +9,8 @@ import {
   GraphQLBoolean as BooleanType,
 } from 'graphql';
 import moment from 'moment';
-import AppointmentType from '../types/AppointmentType';
+import AppointmentType from '../types/appointmentType';
+
 // import api from '../../api';
 // import { get, upsert } from '../database';
 
