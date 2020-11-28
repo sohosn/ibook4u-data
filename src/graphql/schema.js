@@ -1,3 +1,5 @@
+// https://www.apollographql.com/blog/three-ways-to-represent-your-graphql-schema-a41f4175100d/
+
 // const resolvers = require('./resolvers');
 // const typeDefs = require('./typeDefs');
 

@@ -5,7 +5,7 @@ import cors from 'cors';
 import { ApolloServer } from 'apollo-server-express';
 import morgan from 'morgan';
 import jwt from 'jsonwebtoken';
-import schema from './graphql/schema';
+import schema from './src/graphql/schema';
 import auth from './config/auth';
 import config from './config/config';
 
@@ -19,12 +19,11 @@ app.use(auth);
 const server = new ApolloServer({ schema });
 server.applyMiddleware({ app });
 
-const token = jwt.sign(
-  { username: 'admin', email: 'business@soho.sg' },
-  config.secret
-);
-
 if (process.env.ENV === 'dev') {
+  const token = jwt.sign(
+    { username: 'admin', email: 'business@soho.sg' },
+    config.secret
+  );
   console.log(token);
 }
 

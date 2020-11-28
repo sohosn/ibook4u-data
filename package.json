@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --exec ENV=dev babel-node index.js",
-    "test": "babel-node test/tokenTest.js",
+    "test": "babel-node test/databaseTest.js",
     "build": "babel ./src --out-dir ./build",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "tunnel": "`head -1 ./src/database/index.js | cut -c 4-`"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +17,7 @@
     "apollo-server-express": "^2.19.0",
     "auto-sorting-array": "^4.5.0",
     "cors": "^2.8.5",
+    "couchbase": "^3.0.7",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "graphql": "^15.4.0",
