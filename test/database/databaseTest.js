@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import couchbase from 'couchbase';
-import config from '../config/config';
+import config from '../../config/config';
 
 const { url, username, password } = config.couchbase;
 

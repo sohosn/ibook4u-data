@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --exec ENV=dev babel-node index.js",
-    "test": "babel-node test/databaseTest.js",
+    "test": "jest",
     "build": "babel ./src --out-dir ./build",
     "lint": "eslint .",
     "tunnel": "`head -1 ./src/database/index.js | cut -c 4-`"
@@ -34,6 +34,7 @@
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.1.4",
+    "jest": "^26.6.3",
     "nodemon": "^2.0.6",
     "prettier": "^2.2.0"
   },
@@ -41,5 +42,6 @@
     "presets": [
       "@babel/preset-env"
     ]
-  }
+  },
+  "eslintIgnore": ["*.test.js"]
 }
