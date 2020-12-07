@@ -1,12 +1,13 @@
 import { GraphQLObjectType as ObjectType } from 'graphql';
 
 import appointment from './appointmentQuery';
+import getAppointmentsByPerson from './named/getAppointmentsByPerson';
 
 const Query = new ObjectType({
   name: 'Query',
   fields: () => ({
     appointment,
-    // createWaitingAppointment,
+    getAppointmentsByPerson,
     // updateAppointment,
     // cancelAppointment,
     // updateEventStatus,

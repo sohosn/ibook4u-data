@@ -17,4 +17,6 @@ const schema = new Schema({
   mutation: mutations,
 });
 
+console.log(JSON.stringify(queries, null, 2));
+
 module.exports = schema;

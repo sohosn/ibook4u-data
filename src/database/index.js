@@ -1,4 +1,4 @@
-// ssh sohoe -L 18091:172.17.0.1:18091 -L 18092:172.17.0.1:18092 -L 18093:172.17.0.1:18093 -L 18094:172.17.0.1:18094 -L 8094:172.17.0.1:8094 -L 8092:172.17.0.1:8092 -L 8091:172.17.0.1:8091 -L 11207:172.17.0.1:11207  -L 11210:172.17.0.1:11210 -L 8093:172.17.0.1:8093 -L 11211:172.17.0.1:11211
+// ssh sohon -L 18091:172.17.0.1:18091 -L 18092:172.17.0.1:18092 -L 18093:172.17.0.1:18093 -L 18094:172.17.0.1:18094 -L 8094:172.17.0.1:8094 -L 8092:172.17.0.1:8092 -L 8091:172.17.0.1:8091 -L 11207:172.17.0.1:11207  -L 11210:172.17.0.1:11210 -L 8093:172.17.0.1:8093 -L 11211:172.17.0.1:11211
 // https://www.npmjs.com/package/couchbase
 /* eslint-disable no-console */
 const couchbase = require('couchbase');
@@ -7,7 +7,6 @@ const config = require('../../config/config');
 // console.log(config.couchbaseUrl);
 const { url, username, password } = config.couchbase;
 const cluster = new couchbase.Cluster(url, { username, password });
-const { N1qlQuery } = couchbase;
 const bucket = cluster.bucket('default');
 const coll = bucket.defaultCollection();
 // bucket.enableN1ql([queryUrl]);
@@ -19,7 +18,7 @@ async function runOperation(operation, options) {
   } catch (err) {
     // console.error(`runOperation=${JSON.stringify(err)}`);
     res = null;
-    // throw err;
+    throw err;
   }
   // bucket.disconnect();
   return res;
@@ -78,16 +77,13 @@ function setObject(options) {
 function queryOperation(options) {
   const { queryString } = options;
 
-  // console.log(`queryString1=${queryString}`);
-  // select * from default events where extendedProperties.shared.resourceName='people/c6618236514557043606 limit 0,10';
-  const n1Query = N1qlQuery.fromString(queryString);
-
   return new Promise((res, rej) => {
-    bucket.query(n1Query, (err, rows) => {
+    cluster.query(queryString, (err, rows) => {
       if (err) {
-        console.error(`Err queryOperation n1Query=${n1Query}`);
+        // console.error(`Err queryOperation n1Query=${queryString}`);
         rej(err);
       } else {
+        // console.log(`rows = ${JSON.stringify(rows, null, 2)}`);
         res(rows);
       }
     });
@@ -121,6 +117,7 @@ export async function remove(id) {
 
 export async function query(queryString) {
   // https://developer.couchbase.com/documentation/server/4.1/sdks/node-2.0/n1ql-queries.html
+  // console.log(`database/index queryString = ${queryString}`);
   const obj = await runOperation(queryOperation, {
     queryString,
   });

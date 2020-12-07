@@ -1,8 +1,8 @@
 import { GraphQLString as StringType } from 'graphql';
-import appointmentType from '../types/appointmentType';
+import appointmentType from '../types/AppointmentType';
 import { get } from '../../database';
 
-module.exports = {
+export default {
   type: appointmentType,
   args: {
     id: { type: StringType },

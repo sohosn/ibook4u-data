@@ -9,7 +9,7 @@ import {
   GraphQLBoolean as BooleanType,
 } from 'graphql';
 import moment from 'moment';
-import AppointmentType from '../types/appointmentType';
+import AppointmentType from '../types/AppointmentType';
 
 // import api from '../../api';
 // import { get, upsert } from '../database';
@@ -59,7 +59,7 @@ function createTransactionEntry(
   return entryTemplate;
 }
 
-module.exports = {
+const createAppointment = {
   type: AppointmentType,
   args: {
     name: {
@@ -276,3 +276,5 @@ module.exports = {
     }
   },
 };
+
+export default createAppointment;
