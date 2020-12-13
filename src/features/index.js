@@ -1,8 +1,6 @@
 import moment from 'moment';
 import functions from './catalog';
 
-console.log(Object.keys(functions));
-
 const defaultFunction = functions.listEvents;
 
 function processArguments(argv) {

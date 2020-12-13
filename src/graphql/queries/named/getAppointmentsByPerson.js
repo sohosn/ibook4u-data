@@ -1,9 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { GraphQLString as StringType, GraphQLInt as IntType } from 'graphql';
 import PersonType from '../../types/PersonType';
-import features from '../../../features/catalog';
-
-const { getAppointmentsByPerson } = features;
+import { getAppointmentsByPerson } from '../../../features/catalog';
 
 // hardcode for 3 now
 const getAppointmentsByPersonQuery = {
