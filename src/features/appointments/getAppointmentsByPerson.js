@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import moment from 'moment';
-import { get, query } from '../../database';
-import getAppointment from '../../database/appoinments/getAppointments';
+import { query } from '../../database';
+import getAppointment from './getAppointment';
 
 // CREATE INDEX canceledAt_index ON `default`(canceledAt);
 export function cancelledByPerson(options) {
@@ -59,32 +59,18 @@ export function byPerson(options) {
         limit || '5'
       }`;
 
-      // console.log(queryString);
+      console.log(queryString);
       const { rows: idObjs } = await query(queryString);
       // console.log(`idObjs=${JSON.stringify(idObjs, null, 2)}`);
       // need to get batch here instead
       const promises = [];
-      let uuidObjs = [];
       idObjs.forEach((idObj) => {
         const { uuid } = idObj;
-        // console.log(`uuid=${uuid}`);
-        promises[promises.length] = get(`appt:${uuid}`);
+        console.log(`uuid=${uuid}`);
+        promises[promises.length] = getAppointment(uuid);
       });
 
-      uuidObjs = await Promise.all(promises);
-
-      const appointmentsPromises = [];
-
-      uuidObjs.forEach((uuidObj) => {
-        // console.log(`uuidObj.value.id=${uuidObj.value.id}`);
-        if (uuidObj !== null)
-          appointmentsPromises[appointmentsPromises.length] = getAppointment(
-            uuidObj.value.id
-          );
-      });
-
-      const appointments = await Promise.all(appointmentsPromises);
-      // console.log(appointments);
+      const appointments = await Promise.all(promises);
       res({
         id,
         cancelCount,

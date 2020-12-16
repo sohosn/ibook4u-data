@@ -11,6 +11,8 @@ const bucket = cluster.bucket('default');
 const coll = bucket.defaultCollection();
 // bucket.enableN1ql([queryUrl]);
 
+const tenantPrefix = config.tenant ? `${config.tenant}:` : '';
+
 async function runOperation(operation, options) {
   let res = null;
   try {
@@ -25,11 +27,11 @@ async function runOperation(operation, options) {
 }
 
 function getObject(options) {
-  const { id } = options;
+  const objId = tenantPrefix + options.id;
   return new Promise((res, rej) => {
-    coll.get(id, (err, result) => {
+    coll.get(objId, (err, result) => {
       if (err) {
-        console.error(`Err getObject id=${options.id}`);
+        console.error(`Err getObject id=${objId}`);
         // console.error(`getObject err`, err);
         rej(err);
       } else {
@@ -40,11 +42,11 @@ function getObject(options) {
 }
 
 function deleteObject(options) {
-  const { id } = options;
+  const objId = tenantPrefix + options.id;
   return new Promise((res, rej) => {
-    bucket.remove(id, (err, result) => {
+    bucket.remove(objId, (err, result) => {
       if (err) {
-        console.error(`Err deleteObject id=${options.id}`);
+        console.error(`Err deleteObject id=${objId}`);
         rej(err);
       } else {
         res(result);
@@ -54,17 +56,17 @@ function deleteObject(options) {
 }
 
 function setObject(options) {
-  const { id, doc } = options;
+  const objId = tenantPrefix + options.id;
   return new Promise((res, rej) => {
     bucket.upsert(
-      id,
-      doc,
+      objId,
+      options.doc,
       {
         persist_to: 1,
       },
       (err, result) => {
         if (err) {
-          console.error(`Err setObject id=${options.id}`);
+          console.error(`Err setObject id=${objId}`);
           rej(err);
         } else {
           res(result);
@@ -76,6 +78,8 @@ function setObject(options) {
 
 function queryOperation(options) {
   const { queryString } = options;
+
+  //  https://docs.couchbase.com/server/5.5/performance/index-scans.html
 
   return new Promise((res, rej) => {
     cluster.query(queryString, (err, rows) => {
@@ -91,8 +95,6 @@ function queryOperation(options) {
 }
 
 export async function upsert(id, doc) {
-  // console.log(id);
-  // console.log(doc);
   const obj = await runOperation(setObject, {
     id,
     doc,
@@ -104,7 +106,6 @@ export async function get(id) {
   const obj = await runOperation(getObject, {
     id,
   });
-  // console.log(obj);
   return obj;
 }
 
@@ -116,6 +117,7 @@ export async function remove(id) {
 }
 
 export async function query(queryString) {
+  // https://blog.couchbase.com/scopes-and-collections-for-modern-multi-tenant-applications-couchbase-7-0/
   // https://developer.couchbase.com/documentation/server/4.1/sdks/node-2.0/n1ql-queries.html
   // console.log(`database/index queryString = ${queryString}`);
   const obj = await runOperation(queryOperation, {
