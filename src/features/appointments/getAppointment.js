@@ -14,7 +14,7 @@ async function getApppointment(id) {
     // console.log(`appt=${JSON.stringify(appt, null, 2)}`);
     return appt;
   } catch (error) {
-    console.error('from getAppointment', error);
+    // console.error('from getAppointment', error);
     return null;
   }
 }
