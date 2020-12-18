@@ -1,18 +1,22 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable import/named */
+/* eslint-disable no-console */
 import moment from 'moment';
 import functions from './catalog';
 
-const defaultFunction = functions.listEvents;
-
 function processArguments(argv) {
+  // console.log(argv.action);
   const options = argv;
-  const startDT = moment(argv.start);
-  const endDT = moment(startDT).add(argv.duration, 'minutes');
+  const startDT = argv.start ? moment(argv.start) : null;
+  const endDT = argv.start
+    ? moment(startDT).add(argv.duration, 'minutes')
+    : null;
 
   return {
     ...options,
-    startDT: startDT.toISOString(),
-    endDT: argv.duration ? endDT.toISOString() : null,
-    action: functions[argv.action] || defaultFunction,
+    startDT,
+    endDT: argv.duration ? endDT : null,
+    action: functions[argv.action] || functions.listEvents,
   };
 }
 
