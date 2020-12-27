@@ -10,6 +10,7 @@ import getEvent from './events/getEvent';
 import listEvents from './events/listEvents';
 import listServices from './services/listServices';
 import listContacts from './contacts/listContacts';
+import getContact from './contacts/getContact';
 
 export default {
   getAppointmentsByPerson,
@@ -17,4 +18,5 @@ export default {
   listEvents,
   listServices,
   listContacts,
+  getContact,
 };

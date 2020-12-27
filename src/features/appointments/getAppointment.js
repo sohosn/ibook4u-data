@@ -15,7 +15,7 @@ async function getApppointment(id) {
     return appt;
   } catch (error) {
     // console.error('from getAppointment', error);
-    return null;
+    return {};
   }
 }
 

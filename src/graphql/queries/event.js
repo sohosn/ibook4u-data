@@ -8,7 +8,7 @@ const events = {
     id: { type: StringType },
   },
   async resolve(_obj, args) {
-    const databaseObj = await api('event', { eventId: args.id });
+    const databaseObj = await api('getEvent', { eventId: args.id });
     return databaseObj.value;
   },
 };

@@ -7,6 +7,13 @@ import {
 const ContactType = new ObjectType({
   name: 'Contact',
   fields: {
+    id: {
+      type: new NonNull(StringType),
+      async resolve(obj) {
+        // console.log(obj);
+        return obj.resourceName;
+      },
+    },
     name: {
       type: new NonNull(StringType),
       async resolve(obj /* , args */) {

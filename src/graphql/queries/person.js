@@ -1,6 +1,6 @@
 import { GraphQLString as StringType } from 'graphql';
 import PersonType from '../types/PersonType';
-import api from '../../api';
+import api from '../../features';
 
 // hardcode for 3 now
 const person = {

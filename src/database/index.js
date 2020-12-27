@@ -38,7 +38,7 @@ function getObject(options) {
       if (err) {
         console.error(`Err getObject id=${objId}`);
         // console.error(`getObject err`, err);
-        rej(err);
+        res({});
       } else {
         res(result);
       }

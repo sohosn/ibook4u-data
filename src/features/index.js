@@ -5,7 +5,7 @@ import moment from 'moment';
 import functions from './catalog';
 
 function processArguments(action, argv = {}) {
-  console.log(`processArguments action = ${action}`);
+  // console.log(`FEATURES processArguments action = ${action}`);
   const options = argv;
   const startDT = argv.start ? moment(argv.start) : null;
   const endDT = argv.start
@@ -21,8 +21,9 @@ function processArguments(action, argv = {}) {
 }
 
 // eslint-disable-next-line no-shadow
-export default async function main(argv) {
-  const options = processArguments(argv);
-  const results = await options.action(options);
+export default async function main(action, argv) {
+  const options = processArguments(action, argv);
+  console.log(`FEATURES options`, options);
+  const results = await functions[action](options);
   return results;
 }

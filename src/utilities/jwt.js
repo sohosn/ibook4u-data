@@ -93,7 +93,7 @@ async function generatePeopleObj() {
   });
 }
 
-module.exports = {
+export default {
   generateJWT,
   generateCalendarObj,
   generatePeopleObj,
