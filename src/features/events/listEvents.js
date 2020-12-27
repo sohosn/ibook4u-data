@@ -29,7 +29,7 @@ export default async function list(options) {
 
   // console.log(`queryString = ${queryString}`);
   const objs = await query(queryString);
-
+  // console.log('objs', JSON.stringify(objs.rows, null, 2));
   // .then((idObjs) => {
   //   try {
   //     let totalCancelledLess36 = -1;

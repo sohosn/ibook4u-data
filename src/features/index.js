@@ -8,14 +8,15 @@ function processArguments(action, argv = {}) {
   // console.log(`FEATURES processArguments action = ${action}`);
   const options = argv;
   const startDT = argv.start ? moment(argv.start) : null;
-  const endDT = argv.start
-    ? moment(startDT).add(argv.duration, 'minutes')
-    : null;
+  const endDT =
+    argv.duration && argv.start
+      ? moment(startDT).add(argv.duration, 'minutes')
+      : argv.end;
 
   return {
     ...options,
     startDT,
-    endDT: argv.duration ? endDT : null,
+    endDT: endDT || null,
     action: functions[action] || functions.listEvents,
   };
 }
@@ -23,7 +24,8 @@ function processArguments(action, argv = {}) {
 // eslint-disable-next-line no-shadow
 export default async function main(action, argv) {
   const options = processArguments(action, argv);
-  // console.log(`FEATURES options`, options);
+  console.log(`FEATURES action`, action);
+  console.log(`FEATURES options`, JSON.stringify(options, null, 2));
   const results = await functions[action](options);
   return results;
 }

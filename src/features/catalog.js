@@ -7,12 +7,17 @@
 // An Event is specifically created to model the data structure of a calendar event for separation of concerns. You should always start from an appointment not an event
 import getAppointmentsByPerson from './appointments/getAppointmentsByPerson';
 import getEvent from './events/getEvent';
+import createEvent from './events/createEvent';
 import listEvents from './events/listEvents';
 import listServices from './services/listServices';
 import listContacts from './contacts/listContacts';
 import getContact from './contacts/getContact';
 import getPerson from './persons/getPerson';
 import getTransaction from './transactions/getTransaction';
+import updateServices from './services/updateServices';
+import createAppointment from './appointments/createAppointment';
+import getAppointment from './appointments/getAppointment';
+import createTransaction from './transactions/createTransaction';
 
 export default {
   getAppointmentsByPerson,
@@ -23,4 +28,9 @@ export default {
   getContact,
   getPerson,
   getTransaction,
+  updateServices,
+  createAppointment,
+  createTransaction,
+  createEvent,
+  getAppointment,
 };

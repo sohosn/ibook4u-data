@@ -10,16 +10,7 @@ import {
 } from 'graphql';
 import moment from 'moment';
 import AppointmentType from '../types/AppointmentType';
-
-// import api from '../../api';
-// import { get, upsert } from '../database';
-
-function api() {
-  return {};
-}
-
-const get = api;
-const upsert = api;
+import api from '../../features';
 
 function createTransactionEntry(
   uuid,
@@ -117,7 +108,7 @@ const createAppointment = {
       toBeInformed,
       deposit,
       force,
-      waitingList,
+      // waitingList,
     }
   ) {
     let finalResourceName = resourceName;
@@ -134,8 +125,7 @@ const createAppointment = {
       const first = firstLast[0];
       const last = firstLast[1] || '';
       // console.log(`first=${first} last = ${last}`);
-      const res = await api({
-        action: 'createContact',
+      const res = await api('createContact', {
         first,
         last,
         mobile,
@@ -145,8 +135,8 @@ const createAppointment = {
 
     try {
       /* need to abstract this logic */
-      const response = await get(`config:services`);
-      const listOfServices = response.value.services;
+      const listOfServices = await api('listServices');
+      // console.log('createAppointment.js listOfServices', listOfServices);
       const astServices = new AST(listOfServices, 'id');
 
       const services = serviceIds.map((serviceId) =>
@@ -157,17 +147,14 @@ const createAppointment = {
       // console.error(services);
       // console.error(astServices.getArray());
 
-      upsert(`config:services`, {
-        services: astServices.getArray(),
-      });
+      api('updateServices', astServices.getArray());
       /* end of abstraction */
 
       let reminded = false;
 
       // get finalResourceName here
-      const person = await api({
-        action: 'getContact',
-        resourceName: finalResourceName,
+      const person = await api('getContact', {
+        id: finalResourceName,
       });
       const userDefined = person && person.userDefined;
 
@@ -182,39 +169,38 @@ const createAppointment = {
 
       const now = moment();
       // create event vs waiting list
-      if (waitingList) {
-        const { event, uuid } = await api({
-          action: 'createWaitingEvent',
-          name,
-          start,
-          mobile,
-          // these services sent in are objects
-          services,
-          duration,
-          resourceName: finalResourceName,
-          // these are sent in as floats not actually needed
-          totalAmount,
-          additional,
-          discount,
-          reminded,
-          informed: !!(
-            toBeInformed === undefined ||
-            toBeInformed === 'false' ||
-            toBeInformed === false
-          ), // bad logic
-          deposit,
-          force: true,
-        });
-        return {
-          id: uuid,
-          event,
-          transaction: {},
-          createdAt: now,
-          lastUpdated: now,
-        };
-      }
-      const { event, uuid } = await api({
-        action: 'createEvent',
+      // if (waitingList) {
+      //   const { event, uuid } = await api({
+      //     action: 'createWaitingEvent',
+      //     name,
+      //     start,
+      //     mobile,
+      //     // these services sent in are objects
+      //     services,
+      //     duration,
+      //     resourceName: finalResourceName,
+      //     // these are sent in as floats not actually needed
+      //     totalAmount,
+      //     additional,
+      //     discount,
+      //     reminded,
+      //     informed: !!(
+      //       toBeInformed === undefined ||
+      //       toBeInformed === 'false' ||
+      //       toBeInformed === false
+      //     ), // bad logic
+      //     deposit,
+      //     force: true,
+      //   });
+      //   return {
+      //     id: uuid,
+      //     event,
+      //     transaction: {},
+      //     createdAt: now,
+      //     lastUpdated: now,
+      //   };
+      // }
+      const { event, uuid } = await api('createEvent', {
         name,
         start,
         mobile,
@@ -235,7 +221,7 @@ const createAppointment = {
         deposit,
         force,
       });
-      await upsert(`appt:${uuid}`, {
+      await api('createAppointment', {
         id: uuid,
         eventId: event.id,
         transId: uuid,
@@ -254,7 +240,7 @@ const createAppointment = {
         resourceName,
         deposit
       );
-      await upsert(`trans:${uuid}`, transaction);
+      await api('createTransaction', transaction);
       // console.log(`uuid=${uuid}`);
       // console.log(`transaction=${JSON.stringify(transaction, null, 2)}`);
       return { id: uuid, event, transaction, createdAt: now, lastUpdated: now };

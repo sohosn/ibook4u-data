@@ -49,7 +49,7 @@ function getObject(options) {
 function deleteObject(options) {
   const objId = tenantPrefix + options.id;
   return new Promise((res, rej) => {
-    bucket.remove(objId, (err, result) => {
+    coll.remove(objId, (err, result) => {
       if (err) {
         console.error(`Err deleteObject id=${objId}`);
         rej(err);
@@ -62,8 +62,9 @@ function deleteObject(options) {
 
 function setObject(options) {
   const objId = tenantPrefix + options.id;
+  console.log(`objId=${objId}`);
   return new Promise((res, rej) => {
-    bucket.upsert(
+    coll.upsert(
       objId,
       options.doc,
       {
