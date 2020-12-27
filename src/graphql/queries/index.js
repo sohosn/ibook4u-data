@@ -2,18 +2,21 @@ import { GraphQLObjectType as ObjectType } from 'graphql';
 
 import appointment from './appointment';
 import event from './event';
+import contacts from './contacts';
+import services from './services';
 import getAppointmentsByPerson from './named/getAppointmentsByPerson';
 
 const Query = new ObjectType({
   name: 'Query',
   fields: () => ({
     appointment,
-    // persons,
+    contacts,
     event,
+    services,
+    // persons,
     // events,
     // person,
     // service,
-    // services,
     // product,
     // products,
     // slot,

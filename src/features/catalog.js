@@ -8,9 +8,11 @@
 import getAppointmentsByPerson from './appointments/getAppointmentsByPerson';
 import getEvent from './events/getEvent';
 import listEvents from './events/listEvents';
+import listServices from './services/listServices';
 
 export default {
   getAppointmentsByPerson,
   getEvent,
   listEvents,
+  listServices,
 };

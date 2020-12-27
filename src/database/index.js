@@ -1,15 +1,20 @@
-// ssh sohon -L 18091:172.17.0.1:18091 -L 18092:172.17.0.1:18092 -L 18093:172.17.0.1:18093 -L 18094:172.17.0.1:18094 -L 8094:172.17.0.1:8094 -L 8092:172.17.0.1:8092 -L 8091:172.17.0.1:8091 -L 11207:172.17.0.1:11207  -L 11210:172.17.0.1:11210 -L 8093:172.17.0.1:8093 -L 11211:172.17.0.1:11211
+// ssh sohon -L 18091:172.17.0.1:18091 -L 18092:172.17.0.1:18092 -L 18093:172.17.0.1:18093 -L 18094:172.17.0.1:18094 -L 11207:172.17.0.1:11207
+// ssh sohon -L 19091:172.17.0.1:18091 -L 19092:172.17.0.1:18092 -L 19093:172.17.0.1:18093 -L 19094:172.17.0.1:18094 -L 19207:172.17.0.1:11207
+// ssh sohon -L 11207:172.17.0.1:11207 -L 11210:172.17.0.1:11210 -L 8093:172.17.0.1:8093 -L 8092:172.17.0.1:8092 -L 8091:172.17.0.1:8091
+// ssh sohon -L 18091:172.17.0.1:18091 -L 18092:172.17.0.1:18092 -L 18093:172.17.0.1:18093 -L 18094:172.17.0.1:18094 -L 8094:172.17.0.1:8094 -L 9092:172.17.0.1:8092 -L 9091:172.17.0.1:8091 -L 11207:172.17.0.1:11207  -L 11210:172.17.0.1:11210 -L 8093:172.17.0.1:8093 -L 11211:172.17.0.1:11211
 // https://www.npmjs.com/package/couchbase
+// https://docs.couchbase.com/nodejs-sdk/current/howtos/managing-connections.html
 /* eslint-disable no-console */
 const couchbase = require('couchbase');
 const config = require('../../config/config');
 
 // console.log(config.couchbaseUrl);
 const { url, username, password } = config.couchbase;
+
+console.log(config.couchbase);
 const cluster = new couchbase.Cluster(url, { username, password });
 const bucket = cluster.bucket('default');
 const coll = bucket.defaultCollection();
-// bucket.enableN1ql([queryUrl]);
 
 const tenantPrefix = config.tenant ? `${config.tenant}:` : '';
 
@@ -120,10 +125,15 @@ export async function query(queryString) {
   // https://blog.couchbase.com/scopes-and-collections-for-modern-multi-tenant-applications-couchbase-7-0/
   // https://developer.couchbase.com/documentation/server/4.1/sdks/node-2.0/n1ql-queries.html
   // console.log(`database/index queryString = ${queryString}`);
-  const obj = await runOperation(queryOperation, {
-    queryString,
-  });
-  return obj;
+  try {
+    const obj = await runOperation(queryOperation, {
+      queryString,
+    });
+    return obj;
+  } catch (couchbaseError) {
+    console.error(couchbaseError);
+  }
+  return null;
 }
 
 export default {

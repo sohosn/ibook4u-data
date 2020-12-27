@@ -14,7 +14,7 @@ const app = express();
 // setting up middlewares
 app.use(cors()); // TODO: add origin for the fontend
 app.use(morgan('dev'));
-app.use(auth);
+// app.use(auth);
 
 const server = new ApolloServer({ schema });
 server.applyMiddleware({ app });

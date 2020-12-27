@@ -4,8 +4,8 @@
 import moment from 'moment';
 import functions from './catalog';
 
-function processArguments(argv) {
-  // console.log(argv.action);
+function processArguments(action, argv = {}) {
+  console.log(`processArguments action = ${action}`);
   const options = argv;
   const startDT = argv.start ? moment(argv.start) : null;
   const endDT = argv.start
@@ -16,7 +16,7 @@ function processArguments(argv) {
     ...options,
     startDT,
     endDT: argv.duration ? endDT : null,
-    action: functions[argv.action] || functions.listEvents,
+    action: functions[action] || functions.listEvents,
   };
 }
 

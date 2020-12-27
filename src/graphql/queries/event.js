@@ -1,6 +1,6 @@
 import { GraphQLString as StringType } from 'graphql';
 import EventType from '../types/EventType';
-import { getEvent } from '../../features/catalog';
+import api from '../../features';
 
 const events = {
   type: EventType,
@@ -8,7 +8,7 @@ const events = {
     id: { type: StringType },
   },
   async resolve(_obj, args) {
-    const databaseObj = getEvent({ eventId: args.id });
+    const databaseObj = await api('event', { eventId: args.id });
     return databaseObj.value;
   },
 };

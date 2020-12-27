@@ -4,8 +4,6 @@ import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
 import main from './src/features';
 
-const { argv } = yargs(hideBin(process.argv));
-
 function println(events) {
   if (events.length === 0) {
     console.log('No changed events found.');
@@ -51,8 +49,9 @@ function println(events) {
 }
 
 try {
-  // console.log(argv.action);
-  main(argv).then((results) => {
+  const { argv } = yargs(hideBin(process.argv));
+  console.log(`Command is ${argv.action}`);
+  main(argv.action, argv).then((results) => {
     if (results && Array.isArray(results)) {
       if (results.length > 0 && argv.details) {
         if (results[0].start) {
