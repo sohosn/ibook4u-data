@@ -9,10 +9,12 @@ import getAppointmentsByPerson from './appointments/getAppointmentsByPerson';
 import getEvent from './events/getEvent';
 import listEvents from './events/listEvents';
 import listServices from './services/listServices';
+import listContacts from './contacts/listContacts';
 
 export default {
   getAppointmentsByPerson,
   getEvent,
   listEvents,
   listServices,
+  listContacts,
 };

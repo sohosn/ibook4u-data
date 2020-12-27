@@ -10,16 +10,19 @@ import auth from './config/auth';
 import config from './config/config';
 
 const app = express();
-
+const DEV = process.env.ENV === 'dev';
 // setting up middlewares
 app.use(cors()); // TODO: add origin for the fontend
 app.use(morgan('dev'));
-// app.use(auth);
+
+if (!DEV) {
+  app.use(auth);
+}
 
 const server = new ApolloServer({ schema });
 server.applyMiddleware({ app });
 
-if (process.env.ENV === 'dev') {
+if (DEV) {
   const token = jwt.sign(
     { username: 'admin', email: 'business@soho.sg' },
     config.secret

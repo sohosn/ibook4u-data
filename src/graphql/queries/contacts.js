@@ -6,9 +6,7 @@ import api from '../../features';
 const contacts = {
   type: new List(ContactType),
   async resolve() {
-    // console.log('graphql listContacts');
-
-    const data = await api('getContact');
+    const data = await api('listContacts');
     return data;
   },
 };
