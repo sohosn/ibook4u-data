@@ -1,94 +1,34 @@
 import {
   GraphQLObjectType as ObjectType,
   GraphQLString as StringType,
-  // GraphQLInt as IntegerType,
   GraphQLNonNull as NonNull,
-  // GraphQLFloat as FloatType,
-  GraphQLBoolean as BooleanType,
-  GraphQLList as ListType,
 } from 'graphql';
+
+import EventType from './EventType';
+import TransactionType from './TransactionType';
+import event from '../queries/event';
+import transaction from '../queries/transaction';
 
 const AppointmentType = new ObjectType({
   name: 'Appointment',
   fields: {
-    id: {
-      type: new NonNull(StringType),
-      resolve(obj) {
-        return obj.id;
+    id: { type: StringType },
+    event: {
+      type: EventType,
+      async resolve(obj) {
+        return event.resolve(obj, { id: obj.eventId });
       },
     },
-    status: {
-      type: new NonNull(StringType),
-      resolve(obj) {
-        return obj.status;
+    transaction: {
+      type: TransactionType,
+      async resolve(obj) {
+        return transaction.resolve(obj, { id: obj.transId });
       },
     },
-    resourceName: {
-      type: new NonNull(StringType),
-      resolve(obj) {
-        return obj.extendedProperties.shared.resourceName;
-      },
-    },
-    name: {
-      type: new NonNull(StringType),
-      resolve(obj) {
-        return obj.attendees[0].displayName;
-      },
-    },
-    mobile: {
-      type: new NonNull(StringType),
-      resolve(obj) {
-        return obj.extendedProperties.shared.mobile;
-      },
-    },
-    start: {
-      type: new NonNull(StringType),
-      resolve(obj) {
-        return String(obj.start.dateTime);
-      },
-    },
-    end: {
-      type: new NonNull(StringType),
-      resolve(obj) {
-        return String(obj.end.dateTime);
-      },
-    },
-    created: {
-      type: new NonNull(StringType),
-      resolve(obj) {
-        return String(obj.created);
-      },
-    },
-    serviceIds: {
-      type: new ListType(StringType),
-      resolve(obj) {
-        return obj.extendedProperties.shared.services.split(',');
-      },
-    },
-    apptId: {
-      type: StringType,
-      resolve(obj) {
-        return obj.extendedProperties.shared.uuid;
-      },
-    },
-    informed: {
-      type: BooleanType,
-      resolve(obj) {
-        return obj.extendedProperties.shared.informed;
-      },
-    },
-    confirmed: {
-      type: StringType,
-      resolve(obj) {
-        return obj.extendedProperties.shared.confirmed;
-      },
-    },
-    shortURL: {
-      type: StringType,
-      resolve(obj) {
-        return obj.extendedProperties.shared.shortURL;
-      },
-    },
+    // transactions: { type: new ListType(StringType) },
+    createdAt: { type: new NonNull(StringType) },
+    lastUpdated: { type: new NonNull(StringType) },
   },
 });
-module.exports = AppointmentType;
+
+export default AppointmentType;

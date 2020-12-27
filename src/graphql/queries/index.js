@@ -5,7 +5,7 @@ import event from './event';
 import contact from './contact';
 import contacts from './contacts';
 import services from './services';
-import getAppointmentsByPerson from './named/getAppointmentsByPerson';
+import person from './person';
 
 const Query = new ObjectType({
   name: 'Query',
@@ -15,15 +15,14 @@ const Query = new ObjectType({
     contacts,
     event,
     services,
+    person,
     // persons,
     // events,
-    // person,
     // service,
     // product,
     // products,
     // slot,
     // slots,
-    getAppointmentsByPerson,
   }),
 });
 module.exports = Query;

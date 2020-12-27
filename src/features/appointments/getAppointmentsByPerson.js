@@ -66,12 +66,12 @@ export function byPerson(options) {
       const promises = [];
       idObjs.forEach((idObj) => {
         const { uuid } = idObj;
-        console.log(`uuid=${uuid}`);
+        // console.log(`uuid=${uuid}`);
         promises[promises.length] = getAppointment(uuid);
       });
-      console.log(`All Promise Before`);
+      // console.log(`All Promise Before`);
       const appointments = await Promise.all(promises);
-      console.log(`All Promise After`);
+      // console.log(`All Promise After`);
       res({
         id,
         cancelCount,

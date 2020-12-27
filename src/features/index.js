@@ -23,7 +23,7 @@ function processArguments(action, argv = {}) {
 // eslint-disable-next-line no-shadow
 export default async function main(action, argv) {
   const options = processArguments(action, argv);
-  console.log(`FEATURES options`, options);
+  // console.log(`FEATURES options`, options);
   const results = await functions[action](options);
   return results;
 }

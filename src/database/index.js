@@ -33,7 +33,7 @@ async function runOperation(operation, options) {
 
 function getObject(options) {
   const objId = tenantPrefix + options.id;
-  return new Promise((res, rej) => {
+  return new Promise((res) => {
     coll.get(objId, (err, result) => {
       if (err) {
         console.error(`Err getObject id=${objId}`);

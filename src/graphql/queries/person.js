@@ -15,13 +15,12 @@ const person = {
     const { id, limit } = args;
     // console.log(args);
 
-    const getAppointmentsByPerson = await api({
-      action: 'getAppointmentsByPerson',
+    const item = await api('getPerson', {
       id,
       limit,
     });
-    // console.log(getAppointmentsByPerson);
-    return getAppointmentsByPerson;
+    // console.log(item);
+    return item;
   },
 };
 
