@@ -1,6 +1,6 @@
 import { get as getFromDB } from '../../database';
 
-async function getApppointment(id) {
+async function getApppointment({ id }) {
   try {
     const apptResponse = await getFromDB(`appt:${id}`);
     const appt = apptResponse.value;

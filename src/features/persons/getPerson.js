@@ -68,7 +68,7 @@ export function byPerson(options) {
       idObjs.forEach((idObj) => {
         const { uuid } = idObj;
         console.log(`uuid=${uuid}`);
-        promises[promises.length] = getAppointment(uuid);
+        promises[promises.length] = getAppointment({ id: uuid });
       });
       // console.log(`All Promise Before`);
       const appointments = await Promise.all(promises);

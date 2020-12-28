@@ -9,6 +9,6 @@ export default {
   },
   async resolve(_obj, args) {
     // console.log(`ARGS!!!!! ${args.id}`);
-    return api('getAppointment', { id: `appt:${args.id}` });
+    return api('getAppointment', { id: args.id });
   },
 };

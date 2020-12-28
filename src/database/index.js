@@ -36,8 +36,10 @@ function getObject(options) {
   return new Promise((res) => {
     coll.get(objId, (err, result) => {
       if (err) {
+        console.error(`Err tenantPrefix=${tenantPrefix}`);
+        console.error(`Err options.id=${options.id}`);
         console.error(`Err getObject id=${objId}`);
-        // console.error(`getObject err`, err);
+        console.error(`getObject err`, err);
         res({});
       } else {
         res(result);
