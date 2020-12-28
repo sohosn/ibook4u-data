@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-const jwt = require('jsonwebtoken');
-const config = require('./config');
+import jwt from 'jsonwebtoken';
+import { getConstant } from './configs';
 
 module.exports = async (req, _res, next) => {
   // check for token in headers
@@ -8,11 +8,13 @@ module.exports = async (req, _res, next) => {
   if (req.method === 'GET' && req.url === '/graphql') {
     next();
   }
-  const token = req.headers.authorization;
-  console.log(`config.secret ${config.secret}`);
-  console.log(`token ${token}`);
+
+  const AUTH_SECRET = getConstant('authSecret');
+  const TOKEN = req.headers.authorization;
+  console.log(`config.secret ${AUTH_SECRET}`);
+  console.log(`token ${TOKEN}`);
   try {
-    const { username } = await jwt.verify(token, config.secret);
+    const { username } = await jwt.verify(TOKEN, AUTH_SECRET);
     // asign the user to req.user
     req.user = username;
     next();

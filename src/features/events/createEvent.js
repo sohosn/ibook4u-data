@@ -4,14 +4,14 @@
 import moment from 'moment';
 import { v1 as uuidv1 } from 'uuid';
 import jwt from '../../utilities/jwt';
+import { getConfig } from '../../utilities/configs';
 // TODO: fix
-import googleKeys from '../../../config/keys/google.json';
 
 import { byPersonCount as getAppointmentsCountByPerson } from '../persons/getPerson';
 
 const { generateCalendarObj } = jwt;
 
-const calendarId = googleKeys.calendar_id;
+const calendarId = getConfig('calendar_id');
 
 const EDIT_URL = 'https://rarebeauty.soho.sg/appointment/edit';
 const TEST_EMAIL = `test@soho.sg`;

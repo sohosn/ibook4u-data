@@ -5,18 +5,20 @@
 // https://www.npmjs.com/package/couchbase
 // https://docs.couchbase.com/nodejs-sdk/current/howtos/managing-connections.html
 /* eslint-disable no-console */
-const couchbase = require('couchbase');
-const config = require('../../config/config');
+import couchbase from 'couchbase';
+import { getConstant } from '../utilities/configs';
 
-// console.log(config.couchbaseUrl);
-const { url, username, password } = config.couchbase;
+const url = getConstant('couchbaseUrl');
+const username = getConstant('username');
+const password = getConstant('password');
 
-console.log(config.couchbase);
+console.log(`${url}, ${username}, ${password}`);
 const cluster = new couchbase.Cluster(url, { username, password });
 const bucket = cluster.bucket('default');
 const coll = bucket.defaultCollection();
+const tenant = null;
 
-const tenantPrefix = config.tenant ? `${config.tenant}:` : '';
+const tenantPrefix = tenant ? `${tenant}:` : '';
 
 async function runOperation(operation, options) {
   let res = null;

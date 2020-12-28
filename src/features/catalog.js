@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable import/prefer-default-export */
 // https://stackoverflow.com/questions/38340500/export-multiple-classes-in-es6-modules
 
@@ -16,8 +17,10 @@ import getPerson from './persons/getPerson';
 import getTransaction from './transactions/getTransaction';
 import updateServices from './services/updateServices';
 import createAppointment from './appointments/createAppointment';
+import cancelAppointment from './appointments/cancelAppointment';
 import getAppointment from './appointments/getAppointment';
 import createTransaction from './transactions/createTransaction';
+import cancelEvent from './events/cancelEvent';
 
 export default {
   getAppointmentsByPerson,
@@ -33,4 +36,6 @@ export default {
   createTransaction,
   createEvent,
   getAppointment,
+  cancelAppointment,
+  cancelEvent,
 };

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable no-console */
 import AST from 'auto-sorting-array';
 import moment from 'moment';
@@ -56,9 +57,8 @@ async function createAppointment({
     const person = await api('getContact', {
       id: finalResourceName,
     });
-    const userDefinedBoolean = person && person.userDefined;
-
-    if (userDefinedBoolean) {
+    const userDefined = person && person.userDefined;
+    if (userDefined) {
       const validPhoneArray = userDefined.filter(
         (obj) => obj.key === 'validPhone'
       );
