@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-async-promise-executor */
 import moment from 'moment';
-import { v4 as uuidv1 } from 'uuid';
+import { v1 as uuidv1 } from 'uuid';
 import jwt from '../../utilities/jwt';
 // TODO: fix
 import googleKeys from '../../../config/keys/google.json';
@@ -48,7 +48,7 @@ function findExistingAppointments(calendar, options) {
   });
 }
 
-function createAppointment(calendar, options) {
+function createEvent(calendar, options) {
   const {
     name,
     mobile,
@@ -179,7 +179,7 @@ export default function create(options) {
         }
       }
 
-      const { event, uuid } = await createAppointment(calendar, {
+      const { event, uuid } = await createEvent(calendar, {
         sendUpdates: 'none',
         ...options,
       });
