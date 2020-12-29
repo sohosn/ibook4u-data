@@ -1,10 +1,12 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-console */
-import AST from 'auto-sorting-array';
-import moment from 'moment';
 
+import moment from 'moment';
+import { v1 as uuidv1 } from 'uuid';
 import { upsert as updateDB } from '../../database';
 import api from '../index';
+import getAndTouchServices from './common/services';
+import willBeReminded from './common/phone';
 
 async function createAppointment({
   name,
@@ -22,6 +24,7 @@ async function createAppointment({
 }) {
   let finalResourceName = resourceName;
   const now = moment();
+  const uuid = uuidv1();
 
   // NEW CUSTOMER FLOW
   if (
@@ -42,32 +45,12 @@ async function createAppointment({
   }
 
   try {
-    /* need to abstract this logic */
-    const listOfServices = await api('listServices');
-    const astServices = new AST(listOfServices, 'id');
-    const services = serviceIds.map((serviceId) =>
-      astServices.getByKey(serviceId)
-    );
-    api('updateServices', astServices.getArray());
-    /* end of abstraction */
+    const services = await getAndTouchServices(serviceIds);
 
-    let reminded = false;
+    const sendReminded = await willBeReminded(finalResourceName);
 
-    // get finalResourceName here
-    const person = await api('getContact', {
-      id: finalResourceName,
-    });
-    const userDefined = person && person.userDefined;
-    if (userDefined) {
-      const validPhoneArray = userDefined.filter(
-        (obj) => obj.key === 'validPhone'
-      );
-      // this is the business logic
-      /* i think we must check the whole array */
-      reminded = validPhoneArray[0] && validPhoneArray[0].value === 'false';
-    }
-
-    const { event, uuid } = await api('createEvent', {
+    const event = await api('createEvent', {
+      uuid,
       name,
       start,
       mobile,
@@ -79,7 +62,7 @@ async function createAppointment({
       totalAmount,
       additional,
       discount,
-      reminded,
+      reminded: sendReminded,
       informed: !!(
         toBeInformed === undefined ||
         toBeInformed === 'false' ||
@@ -89,9 +72,11 @@ async function createAppointment({
       force,
     });
 
-    const transaction = await api('createTransaction', {
-      uuid,
-      services,
+    await updateDB(`event:${event.id}`, event);
+
+    const transaction = await api('upsertTransaction', {
+      id: uuid,
+      items: services,
       totalAmount,
       additional,
       discount,
@@ -101,17 +86,18 @@ async function createAppointment({
       resourceName,
       deposit,
     });
-    // console.log(`uuid=${uuid}`);
-    // console.log(`transaction=${JSON.stringify(transaction, null, 2)}`);
-    const finalObj = {
+
+    const finalAppointmentObj = {
       id: uuid,
+      eventId: event.id,
+      transId: uuid,
       event,
       transaction,
       createdAt: now,
       lastUpdated: now,
     };
-    await updateDB(`appt:${uuid}`, finalObj);
-    return finalObj;
+    await updateDB(`appt:${uuid}`, finalAppointmentObj);
+    return finalAppointmentObj;
   } catch (err) {
     // this is scenario to rollback when appointment cannot be created.
     // remove contact

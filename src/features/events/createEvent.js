@@ -2,20 +2,17 @@
 /* eslint-disable no-console */
 /* eslint-disable no-async-promise-executor */
 import moment from 'moment';
-import { v1 as uuidv1 } from 'uuid';
 import jwt from '../../utilities/jwt';
 import { getConfig } from '../../utilities/configs';
+import contants from './common/constants';
 // TODO: fix
 
 import { byPersonCount as getAppointmentsCountByPerson } from '../persons/getPerson';
 
 const { generateCalendarObj } = jwt;
-
 const calendarId = getConfig('calendar_id');
 
-const EDIT_URL = 'https://rarebeauty.soho.sg/appointment/edit';
-const TEST_EMAIL = `test@soho.sg`;
-const WHATSAPPURL = 'https://wa.me';
+const { EDIT_URL, TEST_EMAIL, WHATSAPPURL } = contants;
 
 function findExistingAppointments(calendar, options) {
   const { startDT, endDT } = options;
@@ -50,6 +47,7 @@ function findExistingAppointments(calendar, options) {
 
 function createEvent(calendar, options) {
   const {
+    uuid,
     name,
     mobile,
     startDT,
@@ -63,8 +61,6 @@ function createEvent(calendar, options) {
   } = options;
 
   return new Promise(async (res, rej) => {
-    const uuid = uuidv1();
-
     const {
       count: countOfExistingAppointments,
     } = await getAppointmentsCountByPerson({
@@ -143,7 +139,7 @@ function createEvent(calendar, options) {
 }
 
 export default function create(options) {
-  const { name, mobile, startDT, endDT, services, force } = options;
+  const { name, mobile, startDT, endDT, services, force, uuid } = options;
 
   console.error(options);
 
@@ -179,14 +175,12 @@ export default function create(options) {
         }
       }
 
-      const { event, uuid } = await createEvent(calendar, {
+      const { event } = await createEvent(calendar, {
         sendUpdates: 'none',
+        uuid,
         ...options,
       });
-      return res({
-        event,
-        uuid,
-      });
+      return res(event);
     } catch (err) {
       console.error('calendar create', err, options);
       return rej('no event created in the end');

@@ -19,8 +19,11 @@ import updateServices from './services/updateServices';
 import createAppointment from './appointments/createAppointment';
 import cancelAppointment from './appointments/cancelAppointment';
 import getAppointment from './appointments/getAppointment';
-import createTransaction from './transactions/createTransaction';
+import updateAppointment from './appointments/updateAppointment';
+import upsertTransaction from './transactions/upsertTransaction';
 import cancelEvent from './events/cancelEvent';
+import patchEvent from './events/patchEvent';
+import listSlots from './slots/listSlots';
 
 export default {
   getAppointmentsByPerson,
@@ -33,9 +36,12 @@ export default {
   getTransaction,
   updateServices,
   createAppointment,
-  createTransaction,
+  upsertTransaction,
   createEvent,
   getAppointment,
   cancelAppointment,
   cancelEvent,
+  listSlots,
+  patchEvent,
+  updateAppointment,
 };

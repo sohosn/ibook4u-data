@@ -3,8 +3,8 @@ import { upsert as updateDB } from '../../database';
 
 function createTransactionEntry(option) {
   const {
-    uuid,
-    entries,
+    id,
+    items,
     totalAmount,
     additional,
     discount,
@@ -15,18 +15,18 @@ function createTransactionEntry(option) {
     deposit,
   } = option;
 
-  const items = entries.map((entry) => ({
+  const transactionItems = items.map((entry) => ({
     id: entry.id,
     name: entry.service,
     type: 'service',
     price: entry.price,
   }));
 
-  const service = entries.reduce((sum, entry) => sum + entry.price, 0);
+  const service = items.reduce((sum, entry) => sum + entry.price, 0);
 
   const entryTemplate = {
-    id: uuid,
-    items,
+    id,
+    items: transactionItems,
     totalAmount,
     service,
     product: 0,

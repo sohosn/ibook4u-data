@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable import/named */
 /* eslint-disable no-console */
@@ -25,6 +26,7 @@ function processArguments(action, argv = {}) {
 export default async function main(action, argv) {
   const options = processArguments(action, argv);
   console.log(`FEATURES action`, action);
+  // console.log(`FEATURES functions`, Object.keys(functions));
   console.log(`FEATURES options`, JSON.stringify(options, null, 2));
   const results = await functions[action](options);
   return results;

@@ -65,14 +65,14 @@ async function getContacts(previousList, pageToken) {
   });
 }
 
-export default async function list(options = { forceRefresh: false }) {
+export default async function listContacts(options = { forceRefresh: false }) {
   const { forceRefresh } = options;
 
   if (cache.length > 0 && forceRefresh !== true) {
     return cache;
   }
 
-  // NTF
+  // TO REMOVE
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (res) => {
     let { data, nextPageToken } = await getContacts();

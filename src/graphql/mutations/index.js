@@ -2,18 +2,19 @@ import { GraphQLObjectType as ObjectType } from 'graphql';
 
 import createAppointment from './createAppointment';
 // import createWaitingAppointment from './CreateWaitingAppointment';
-// import updateAppointment from './UpdateAppointment';
+import updateAppointment from './updateAppointment';
 import cancelAppointment from './cancelAppointment';
 // import updateEventStatus from './UpdateEventStatus';
-// import refreshContacts from './RefreshContacts';
+import refreshContacts from './refreshContacts';
 
 const Mutation = new ObjectType({
   name: 'Mutation',
   fields: () => ({
     createAppointment,
     cancelAppointment,
+    refreshContacts,
+    updateAppointment,
     // createWaitingAppointment,
-    // updateAppointment,
     // updateEventStatus,
     // refreshContacts,
   }),
