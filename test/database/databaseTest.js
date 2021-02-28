@@ -4,6 +4,8 @@ import config from '../../configs/constants';
 
 const { couchbaseUrl, username, password } = config;
 
+console.log(JSON.stringify(config, null, 2));
+
 const cluster = new couchbase.Cluster(couchbaseUrl, { username, password });
 
 const bucket = cluster.bucket('default');
