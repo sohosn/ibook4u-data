@@ -15,7 +15,7 @@ coll.upsert('testdoc', { name: 'Frank' }, (err) => {
   coll.get('testdoc', (_err, res) => {
     if (_err) throw _err;
 
-    console.log(res.value);
+    console.log('Final=', res.value);
     // {name: Frank}
   });
 });
