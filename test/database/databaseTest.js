@@ -2,9 +2,9 @@
 import couchbase from 'couchbase';
 import config from '../../configs/constants';
 
-const { url, username, password } = config.couchbase;
+const { couchbaseUrl, username, password } = config.couchbase;
 
-const cluster = new couchbase.Cluster(url, { username, password });
+const cluster = new couchbase.Cluster(couchbaseUrl, { username, password });
 
 const bucket = cluster.bucket('default');
 const coll = bucket.defaultCollection();
