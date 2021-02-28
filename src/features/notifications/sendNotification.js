@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
-const Twilio = require('twilio');
-const keys = require('../../../config/keys/twilio.json');
-const configs = require('../../../config/config');
+import Twilio from 'twilio';
+import twilioKeys from '../../../configs/twilio.json';
+import { getConfig } from '../../utilities/configs';
 
-const defaultMobile = configs.get('mobile');
-const client = new Twilio(keys.accountSid, keys.authToken);
+const defaultMobile = getConfig('mobile');
+const client = new Twilio(twilioKeys.accountSid, twilioKeys.authToken);
 
 const FROM = 'RareBeauty';
 const REPLY_MOBILE = defaultMobile;
@@ -48,6 +48,8 @@ export function sendSMS(options) {
 }
 
 async function sendNotification(options) {
+  // sending SMS for now only
+  // in the future EMAIL/SMS or both or telegram
   return sendSMS(options);
 }
 
