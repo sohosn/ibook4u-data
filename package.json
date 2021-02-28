@@ -10,7 +10,8 @@
     "tunnel": "`head -1 ./src/database/index.js | cut -c 4-`",
     "cli": "babel-node cli",
     "start": "nodemon --exec ENV=dev babel-node src/index.js",
-    "prod-start": "echo 'tunnel first then go to dist and run node server.js'"
+    "prod-start": "echo 'tunnel first then go to dist and run node server.js'",
+    "db": "babel-node test/database/databaseTest.js"
   },
   "private": true,
   "engines": {
