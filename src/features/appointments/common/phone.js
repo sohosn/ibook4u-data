@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import api from '../../index';
 
 export default async function willBeReminded(personResourceName) {

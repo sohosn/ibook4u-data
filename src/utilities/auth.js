@@ -2,7 +2,7 @@
 import jwt from 'jsonwebtoken';
 import { getConstant } from './configs';
 
-module.exports = async (req, _res, next) => {
+export default async (req, _res, next) => {
   // check for token in headers
 
   if (req.method === 'GET' && req.url === '/graphql') {

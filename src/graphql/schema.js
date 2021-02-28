@@ -19,4 +19,4 @@ const schema = new Schema({
 
 // console.log(JSON.stringify(queries, null, 2));
 
-module.exports = schema;
+export default schema;

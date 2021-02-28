@@ -26,4 +26,4 @@ const Query = new ObjectType({
     // products,
   }),
 });
-module.exports = Query;
+export default Query;

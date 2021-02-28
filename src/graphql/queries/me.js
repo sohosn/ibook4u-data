@@ -7,7 +7,7 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import UserType from '../types/UserType';
+import UserType from '../types/UserType'
 
 const me = {
   type: UserType,
@@ -17,8 +17,8 @@ const me = {
         id: request.user.id,
         email: request.user.email,
       }
-    );
+    )
   },
-};
+}
 
-export default me;
+export default me

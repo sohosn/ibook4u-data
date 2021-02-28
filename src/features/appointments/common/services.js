@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import AST from 'auto-sorting-array';
 import api from '../../index';
 

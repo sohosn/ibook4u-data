@@ -20,4 +20,4 @@ const Mutation = new ObjectType({
   }),
 });
 
-module.exports = Mutation;
+export default Mutation;
