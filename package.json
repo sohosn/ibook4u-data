@@ -11,6 +11,10 @@
     "tunnel": "`head -1 ./src/database/index.js | cut -c 4-`",
     "cli": "babel-node cli"
   },
+  "private": true,
+  "engines": {
+    "node": ">=10"    
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
