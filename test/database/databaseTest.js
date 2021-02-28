@@ -2,7 +2,7 @@
 import couchbase from 'couchbase';
 import config from '../../configs/constants';
 
-const { couchbaseUrl, username, password } = config.couchbase;
+const { couchbaseUrl, username, password } = config;
 
 const cluster = new couchbase.Cluster(couchbaseUrl, { username, password });
 
