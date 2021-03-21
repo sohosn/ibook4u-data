@@ -3,7 +3,7 @@ FROM node:10
 # Set a working directory
 WORKDIR /usr/src/app
 
-COPY ./dist/* ./
+COPY ./dist/. .
 
 # Install Node.js dependencies
 RUN npm install --production
