@@ -27,7 +27,7 @@ async function updateAppointment({
 
     const services = await getAndTouchServices(serviceIds);
 
-    const patchedEvent = await api('patchEvent', {
+    const patchedEvent = await api('updateEvent', {
       event,
       apptId: id, // appointmentId
       name,

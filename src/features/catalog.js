@@ -22,7 +22,7 @@ import getAppointment from './appointments/getAppointment';
 import updateAppointment from './appointments/updateAppointment';
 import upsertTransaction from './transactions/upsertTransaction';
 import cancelEvent from './events/cancelEvent';
-import patchEvent from './events/patchEvent';
+import updateEvent from './events/updateEvent';
 import listSlots from './slots/listSlots';
 
 export default {
@@ -42,6 +42,6 @@ export default {
   cancelAppointment,
   cancelEvent,
   listSlots,
-  patchEvent,
+  updateEvent,
   updateAppointment,
 };

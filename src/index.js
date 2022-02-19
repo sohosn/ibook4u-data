@@ -16,9 +16,9 @@ const DEV = process.env.ENV === 'dev';
 app.use(cors()); // TODO: add origin for the fontend
 app.use(morgan('dev'));
 
-if (!DEV) {
-  app.use(auth);
-}
+// if (!DEV) {
+app.use(auth);
+// }
 
 const server = new ApolloServer({ schema });
 server.applyMiddleware({ app });

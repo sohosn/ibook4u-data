@@ -11,8 +11,8 @@ export default async (req, _res, next) => {
 
   const AUTH_SECRET = getConstant('authSecret');
   const TOKEN = req.headers.authorization;
-  console.log(`config.secret ${AUTH_SECRET}`);
-  console.log(`token ${TOKEN}`);
+  // console.log(`config.secret ${AUTH_SECRET}`);
+  // console.log(`token ${TOKEN}`);
   try {
     const { username } = await jwt.verify(TOKEN, AUTH_SECRET);
     // asign the user to req.user
