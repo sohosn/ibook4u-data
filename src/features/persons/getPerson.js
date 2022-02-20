@@ -60,7 +60,7 @@ export function byPerson(options) {
         limit || '5'
       }`;
 
-      console.log(queryString);
+      console.log('queryString=', queryString);
       const { rows: idObjs } = await query(queryString);
       // console.log(`idObjs=${JSON.stringify(idObjs, null, 2)}`);
       // need to get batch here instead

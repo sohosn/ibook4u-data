@@ -14,11 +14,13 @@ export default async (req, _res, next) => {
   // console.log(`config.secret ${AUTH_SECRET}`);
   // console.log(`token ${TOKEN}`);
   try {
-    const { username } = await jwt.verify(TOKEN, AUTH_SECRET);
+    const { user, tenant } = await jwt.verify(TOKEN, AUTH_SECRET);
     // asign the user to req.user
-    req.user = username;
+    // console.log('user, tenant ', user + ' ' + tenant);
+    req.user = user;
+    req.tenant = tenant;
     next();
   } catch (err) {
-    console.log(err);
+    console.error('Auth Error', err);
   }
 };

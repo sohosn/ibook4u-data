@@ -12,23 +12,33 @@ import { getConstant } from './utilities/configs';
 
 const app = express();
 const DEV = process.env.ENV === 'dev';
+
 // setting up middlewares
 app.use(cors()); // TODO: add origin for the fontend
 app.use(morgan('dev'));
 
-// if (!DEV) {
 app.use(auth);
-// }
 
-const server = new ApolloServer({ schema });
+const server = new ApolloServer({
+  schema,
+  context: async ({ req }) => {
+    const AUTH_SECRET = getConstant('authSecret');
+    const TOKEN = req.headers.authorization;
+    const { user, tenant } = await jwt.verify(TOKEN, AUTH_SECRET);
+    // console.log('{ tenant, user }',user + ' ' + tenant);
+    return { user, tenant };
+  }
+});
 server.applyMiddleware({ app });
 
 if (DEV) {
   const token = jwt.sign(
-    { username: 'admin', email: 'business@soho.sg' },
+    { user: 'admin', tenant: 'SOHO' },
     getConstant('authSecret')
   );
   console.log(token);
+} else {
+  /* IN LIVE, it will be populated by NGINX USER LIST */
 }
 
 app.listen({ port: 4000 }, () =>

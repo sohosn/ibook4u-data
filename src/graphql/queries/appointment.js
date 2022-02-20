@@ -7,8 +7,9 @@ export default {
   args: {
     id: { type: StringType },
   },
-  async resolve(_obj, args) {
+  async resolve(_, args, context) {
     // console.log(`ARGS!!!!! ${args.id}`);
-    return api('getAppointment', { id: args.id });
+    // console.log('context', context);
+    return api('getAppointment', { id: args.id }, context);
   },
 };

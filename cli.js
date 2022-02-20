@@ -52,6 +52,8 @@ try {
   const { argv } = yargs(hideBin(process.argv));
   console.log(`CLI Command is ${argv.action}`);
   console.log(`CLI Options is ${JSON.stringify(argv)}`);
+  argv.user = 'CLI';
+  argv.tenant = 'LOCAL';
   main(argv.action, argv).then((results) => {
     if (results && Array.isArray(results)) {
       if (results.length > 0 && argv.details) {
