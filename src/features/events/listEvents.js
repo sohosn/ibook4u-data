@@ -27,7 +27,7 @@ export default async function list(options) {
      BETWEEN ${finalOptions.timeMin.valueOf()} AND ${finalOptions.timeMax.valueOf()}
     ORDER BY \`start\`.\`dateTime\` asc LIMIT 20`;
 
-  console.log(`queryString = ${queryString}`);
+  // console.log(`queryString = ${queryString}`);
   const objs = await query(queryString);
   // console.log('objs', JSON.stringify(objs.rows, null, 2));
   // .then((idObjs) => {
