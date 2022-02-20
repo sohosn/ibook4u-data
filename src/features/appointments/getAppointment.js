@@ -1,3 +1,4 @@
+import { AuthTokenPromotionInstance } from 'twilio/lib/rest/accounts/v1/authTokenPromotion';
 import { get as getFromDB } from '../../database';
 
 async function getApppointment({ id }) {
@@ -6,8 +7,16 @@ async function getApppointment({ id }) {
     const appt = apptResponse.value;
     const { eventId, transId } = appt;
 
-    const eventResponse = await getFromDB(`event:${eventId}`);
-    const transactionResponse = await getFromDB(`trans:${transId}`);
+    // console.error('eventId', eventId);
+    // console.error('transId', transId);
+
+    const eventPromise = getFromDB(`event:${eventId}`);
+    const transactionPromise = getFromDB(`trans:${transId}`);
+
+    const results = await Promise.all([eventPromise,transactionPromise]);
+
+    const eventResponse = results[0]; 
+    const transactionResponse = results[1];
 
     appt.event = eventResponse.value;
     appt.transaction = transactionResponse.value;

@@ -25,9 +25,9 @@ export default async function list(options) {
   const queryString = `select * from default event 
     where STR_TO_MILLIS(event.\`start\`.\`dateTime\`) 
      BETWEEN ${finalOptions.timeMin.valueOf()} AND ${finalOptions.timeMax.valueOf()}
-    ORDER BY \`start\`.\`dateTime\` desc LIMIT 5`;
+    ORDER BY \`start\`.\`dateTime\` asc LIMIT 20`;
 
-  // console.log(`queryString = ${queryString}`);
+  console.log(`queryString = ${queryString}`);
   const objs = await query(queryString);
   // console.log('objs', JSON.stringify(objs.rows, null, 2));
   // .then((idObjs) => {
